@@ -9,7 +9,7 @@
 ## VSC Advice
 
 * Rust-analyzer is stuck while collecting metadata
-  * `cargo check --workspace --message-format=json --manifest-path Cargo.toml --all-targets`
+  * `cargo check --workspace --manifest-path Cargo.toml --all-targets`
 * VSC has issues loading workspaces, so see `help/settings.json` for an example root-level settings file to go in a root-level `.vscode` directory
 
 ## Nix Advice

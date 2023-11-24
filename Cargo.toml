@@ -1,4 +1,10 @@
 [workspace]
 
 workspace.resolver = "2"
-members = ["cartographer", "curator", "modeler", "reporter", "scraper"]
+members = [
+    "cartographer",
+    "curator",
+    "modeler",
+    "reporter",
+    "scraper",
+]

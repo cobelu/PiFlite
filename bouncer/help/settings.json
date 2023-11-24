@@ -1,10 +1,9 @@
 {
     "rust-analyzer.linkedProjects": [
-        "./bouncer/Cargo.toml",
-        "./cartographer/Cargo.toml",
-        "./curator/Cargo.toml",
-        "./modeler/Cargo.toml",
-        "./reporter/Cargo.toml",
-        "./scraper/Cargo.toml"
+        "../cartographer/Cargo.toml",
+        "../curator/Cargo.toml",
+        "../modeler/Cargo.toml",
+        "../reporter/Cargo.toml",
+        "../scraper/Cargo.toml"
     ]
 }
