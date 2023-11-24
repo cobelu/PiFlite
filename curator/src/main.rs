@@ -1,6 +1,4 @@
-use gtk4::gdk::ModifierType;
-use gtk4::subclass::prelude::ApplicationImpl;
-use gtk4::{prelude::*, EventControllerKey, Shortcut, ShortcutAction, ShortcutTrigger};
+use gtk4::prelude::*;
 use gtk4::{Application, ApplicationWindow, Label};
 
 fn main() {
