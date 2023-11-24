@@ -5,6 +5,7 @@ mkShell {
     rustup
     duckdb
     libiconv
+    atkmm
     darwin.apple_sdk.frameworks.SystemConfiguration
   ];
 }
