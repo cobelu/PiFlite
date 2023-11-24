@@ -16,9 +16,9 @@ error_chain! {
 
 fn main() -> Result<()> {
     // let url = "https://nfdc.faa.gov/webContent/28DaySub/2023-11-02/class_airspace_shape_files.zip";
-    let url = "https://nfdc.faa.gov/webContent/28DaySub/extra/02_Nov_2023_CSV.zip";
-    let zipped_name = "./download.zip";
-    let unzipped_name = "./download_dir";
+    let _url = "https://nfdc.faa.gov/webContent/28DaySub/extra/02_Nov_2023_CSV.zip";
+    let _zipped_name = "./download.zip";
+    let _unzipped_name = "./download_dir";
     // download_file(url, zipped_name)?;
     // unzip_file(unzipped_name, zipped_name)?;
     // write_shapes_to_duck_db()
