@@ -6,6 +6,5 @@ mkShell {
     duckdb
     libiconv
     atkmm
-    darwin.apple_sdk.frameworks.SystemConfiguration
-  ];
+  ] ++ lib.optional stdenv.isDarwin darwin.apple_sdk.frameworks.SystemConfiguration;
 }
