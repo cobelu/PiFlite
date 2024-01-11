@@ -1,4 +1,4 @@
-use reqwest;
+
 use std::fs::File;
 use std::io::Write;
 use std::path::{Path, PathBuf};
@@ -19,13 +19,12 @@ fn main() -> Result<()> {
     let url = "https://nfdc.faa.gov/webContent/28DaySub/extra/02_Nov_2023_CSV.zip";
     let zipped_name = "./download.zip";
     let unzipped_name = "./download_dir";
-    // download_file(url, zipped_name)?;
-    // unzip_file(unzipped_name, zipped_name)?;
-    // write_shapes_to_duck_db()
+    download_file(url, zipped_name)?;
+    unzip_file(unzipped_name, zipped_name)?;
+    write_shapes_to_duck_db()?;
     let sql = get_csv_names("./download_dir")?
         .iter()
-        .map(|csv_name| make_table_sql(csv_name))
-        .flatten()
+        .filter_map(|csv_name| make_table_sql(csv_name))
         .collect();
     write_tables_to_duck_db(sql)
 }
@@ -36,7 +35,7 @@ fn download_file(url: &str, zipped_name: &str) -> Result<()> {
 
     // TODO: Fix paths to use tempfile instead
     let path = Path::new(zipped_name);
-    let mut file = File::create(&path)?;
+    let mut file = File::create(path)?;
     let content = response.bytes()?;
     file.write_all(&content)?;
     println!("Wrote file");
@@ -51,7 +50,7 @@ fn unzip_file(unzipped_name: &str, zipped_name: &str) -> Result<()> {
     let mut archive = zip::ZipArchive::new(file)?;
     println!("Created ZipArchive");
 
-    archive.extract(&unzipped_path)?;
+    archive.extract(unzipped_path)?;
     println!("Extracted");
 
     Ok(())
@@ -84,22 +83,20 @@ fn get_csv_names(dir_path: &str) -> Result<Vec<PathBuf>> {
 }
 
 fn write_tables_to_duck_db(sql: String) -> Result<()> {
-    // let conn = duckdb::Connection::open_in_memory()?;
     let path = Path::new("./piflite.db");
     let conn = duckdb::Connection::open(path)?;
     conn.execute_batch(sql.as_str())?;
     Ok(())
 }
 
-fn make_table_sql(path_buf: &PathBuf) -> Option<String> {
-    path_buf
-        .file_stem()
+fn make_table_sql(path: &Path) -> Option<String> {
+    path.file_stem()
         .map(|stem| stem.to_ascii_lowercase())
         .map(|stem| {
             format!(
                 "CREATE TABLE {:?} AS SELECT * FROM read_csv_auto('{}');",
                 stem,
-                path_buf.display(), // FIXME
+                path.display(), // FIXME
             )
         })
 }
