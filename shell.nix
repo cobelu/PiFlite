@@ -2,10 +2,21 @@ with import <nixpkgs> {};
 
 mkShell {
   buildInputs = [
-    rustup
+    atkmm
     duckdb
     libiconv
-    atkmm
-    darwin.apple_sdk.frameworks.SystemConfiguration
-  ];
+    openssl
+    rustup
+  ] ++ lib.optional stdenv.isDarwin darwin.apple_sdk.frameworks.SystemConfiguration;
+
+  # nativeBuildInputs = with pkgs; [
+  #     pkg-config
+  # ];
+
+  # dbus = pkgs.dbus;
+
+  shellHook = ''
+    export DUCKDB_LIB_DIR="${duckdb}/bin"
+  '';
+
 }

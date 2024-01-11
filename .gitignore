@@ -22,3 +22,10 @@
 
 # DuckDB
 **/*.db
+
+# TODO: Remove this and use temp files instead
+scraper/download_dir/
+scraper/download.zip
+**/Shape_Files/
+**/download_dir/
+**/download.zip
