@@ -1,4 +1,4 @@
-use reqwest;
+
 use std::fs::File;
 use std::io::Write;
 use std::path::{Path, PathBuf};
@@ -21,11 +21,10 @@ fn main() -> Result<()> {
     let unzipped_name = "./download_dir";
     download_file(url, zipped_name)?;
     unzip_file(unzipped_name, zipped_name)?;
-    let _ = write_shapes_to_duck_db()?;
+    write_shapes_to_duck_db()?;
     let sql = get_csv_names("./download_dir")?
         .iter()
-        .map(|csv_name| make_table_sql(csv_name))
-        .flatten()
+        .filter_map(|csv_name| make_table_sql(csv_name))
         .collect();
     write_tables_to_duck_db(sql)
 }
@@ -36,7 +35,7 @@ fn download_file(url: &str, zipped_name: &str) -> Result<()> {
 
     // TODO: Fix paths to use tempfile instead
     let path = Path::new(zipped_name);
-    let mut file = File::create(&path)?;
+    let mut file = File::create(path)?;
     let content = response.bytes()?;
     file.write_all(&content)?;
     println!("Wrote file");
@@ -51,7 +50,7 @@ fn unzip_file(unzipped_name: &str, zipped_name: &str) -> Result<()> {
     let mut archive = zip::ZipArchive::new(file)?;
     println!("Created ZipArchive");
 
-    archive.extract(&unzipped_path)?;
+    archive.extract(unzipped_path)?;
     println!("Extracted");
 
     Ok(())
