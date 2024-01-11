@@ -90,15 +90,14 @@ fn write_tables_to_duck_db(sql: String) -> Result<()> {
     Ok(())
 }
 
-fn make_table_sql(path_buf: &PathBuf) -> Option<String> {
-    path_buf
-        .file_stem()
+fn make_table_sql(path: &Path) -> Option<String> {
+    path.file_stem()
         .map(|stem| stem.to_ascii_lowercase())
         .map(|stem| {
             format!(
                 "CREATE TABLE {:?} AS SELECT * FROM read_csv_auto('{}');",
                 stem,
-                path_buf.display(), // FIXME
+                path.display(), // FIXME
             )
         })
 }
