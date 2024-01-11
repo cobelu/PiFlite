@@ -84,7 +84,6 @@ fn get_csv_names(dir_path: &str) -> Result<Vec<PathBuf>> {
 }
 
 fn write_tables_to_duck_db(sql: String) -> Result<()> {
-    // let conn = duckdb::Connection::open_in_memory()?;
     let path = Path::new("./piflite.db");
     let conn = duckdb::Connection::open(path)?;
     conn.execute_batch(sql.as_str())?;
