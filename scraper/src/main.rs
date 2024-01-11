@@ -21,7 +21,7 @@ fn main() -> Result<()> {
     let unzipped_name = "./download_dir";
     download_file(url, zipped_name)?;
     unzip_file(unzipped_name, zipped_name)?;
-    write_shapes_to_duck_db();
+    let _ = write_shapes_to_duck_db()?;
     let sql = get_csv_names("./download_dir")?
         .iter()
         .map(|csv_name| make_table_sql(csv_name))
